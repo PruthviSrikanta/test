@@ -11,6 +11,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SECRET_PAT }}
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -18,10 +20,12 @@ jobs:
           node-version: 16
 
       - name: bump up version
-        run: npm version patch
+        run: npm version patch --git-tag-version false
 
       - name: Commit version
         run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           #[skip ci] in commit message will skip the action from being called repeatedly: https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs 
           git add .
           git commit -m 'action - auto bump version [skip ci]'
