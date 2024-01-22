@@ -1,0 +1,15 @@
+name: AWS/Azure Dev Deployment - Manage API - DP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print version
+        run: |
+          echo "TESTING MAIN BRANCH"
