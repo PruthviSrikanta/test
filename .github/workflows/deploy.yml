@@ -7,6 +7,7 @@ on:
 
 jobs:
   build-and-push-deploy:
+    if: "!contains(github.event.head_commit.message, 'action - auto bump version')"
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +27,6 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          #[skip ci] in commit message will skip the action from being called repeatedly: https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs 
           git add .
-          git commit -m 'action - auto bump version [skip ci]'
+          git commit -m 'action - auto bump version'
           git push
