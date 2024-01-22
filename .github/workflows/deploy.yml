@@ -1,0 +1,28 @@
+name: AWS/Azure Dev Deployment - Manage API - DP
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build-and-push-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: bump up version
+        run: npm version patch
+
+      - name: Commit version
+        run: |
+          #[skip ci] in commit message will skip the action from being called repeatedly: https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs 
+          git add .
+          git commit -m 'action - auto bump version [skip ci]'
+          git push
